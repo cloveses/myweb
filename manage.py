@@ -34,6 +34,8 @@ def ckupload():
     upload = request.files.get('upload')
     fname,fext = os.path.splitext(upload.filename)
     rootpath = './uploads'
+    if not os.path.exists(rootpath):
+        os.makedirs(rootpath)
     if os.path.exists('/'.join((rootpath,fname+fext))):
         fname += 'c'
     callback = request.GET.getunicode('CKEditorFuncNum')
