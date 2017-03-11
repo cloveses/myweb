@@ -1,9 +1,6 @@
 % rebase('tpls/base.tpl')
-<div>
-    %if name:
-    你好，{{name}}|<a href="/me/{{id}}">个人中心</a>|<a href="/logout">退出</a>
-    %end
-</div>
+% include('tpls/userinfo.tpl',name=name,id=id)
+
     <ul>
         <li><a href="/">返回首页</a></li>
     </ul>

@@ -8,11 +8,8 @@
         });
     });
 </script>
-<div>
-    %if name:
-    你好，{{name}}|<a href="/chgpw/{{id}}">个人中心</a>|<a href="/logout">退出</a>
-    %end
-</div>
+% include('tpls/userinfo.tpl',name=name,id=id)
+
 % include('tpls/nav.tpl',user_type=user_type)
 <div>
     <p>
