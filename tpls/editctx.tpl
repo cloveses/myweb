@@ -9,7 +9,7 @@
 %if name:
     <div>
     <form method="POST">
-        <input type="text" name="title" size="100" value="{{news.title}}" placeholder="请输入标题" />
+        <input type="text" name="title" size="97" value="{{news.title}}" placeholder="请输入标题" />
         <textarea name="txt">{{news.txt}}</textarea>
         <input type="submit" value="保存" />
     </form>

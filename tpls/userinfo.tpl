@@ -6,11 +6,11 @@
     <span style="margin:0 1em;"><a href="/chgpw/{{id}}">个人中心</a></span>|
     <span style="margin:0 1em;"><a href="/logout">退出</a></span>
     %else:
-    <form action="" method="POST">
-    姓名：<input type="text" name="name"  />
-    密码：<input type="password" name="password" />
-    验证：<input type="text" name="verify_text" />
-    <img src="/verify" />
+    <form  class="pure-form" action="" method="POST">
+    姓名：<input type="text" name="name" size="6"/>
+    密码：<input type="password" name="password" size="6"/>
+    验证：<input type="text" name="verify_text" size="6"/>
+    <img src="/verify" height="35" style="vertical-align:middle;" />
     <input type="submit" value="登录" />
     </form>
     %end

@@ -36,12 +36,12 @@ def ckupload():
     rootpath = './uploads'
     if not os.path.exists(rootpath):
         os.makedirs(rootpath)
-    if os.path.exists('/'.join((rootpath,fname+fext))):
+    while os.path.exists('/'.join((rootpath,fname+fext))):
         fname += 'c'
     callback = request.GET.getunicode('CKEditorFuncNum')
     upload.save('/'.join((rootpath,fname+fext)))
     restr = "<script type=\"text/javascript\">"
-    restr += "window.parent.CKEDITOR.tools.callFunction("+ callback + ",'" +"img/"+ fname + fext + "','')"
+    restr += "window.parent.CKEDITOR.tools.callFunction("+ callback + ",'" +"/img/"+ fname + fext + "','')"
     restr += "</script>"
     return restr
 
@@ -237,11 +237,12 @@ def ctxmgr(lid='',page=0):
         bread_nav_dec = []
         if power:
             for p in power:
-                powers.append(level.get_sub_lvls(str(p.id)))
+                powers.append(level.get_sub_lvls(p.id))
         if powers and lid:
+            lid = int(lid)
             bread_nav = level.get_bread_nav(lid)
             ids = set().union(*powers)
-            ids = {str(i.id) for i in ids}
+            ids = {i.id for i in ids}
             for bn in bread_nav:
                 if bn[0] in ids:
                     bread_nav_dec.append(bn)
@@ -251,6 +252,7 @@ def ctxmgr(lid='',page=0):
             name=name,
             id=uid,
             lid=lid,
+            lname=level.get_lvl_name(lid) if lid else '',
             user_type=user_type,
             power=power,
             bread_nav=bread_nav_dec,
@@ -364,7 +366,8 @@ def mindex(plid=''):
                     id=str(u.id),
                     info=info,
                     navs=navs,
-                    newslist=newslist
+                    newslist=newslist,
+                    plid=plid
                     )
             else:
                 response.set_cookie('info',

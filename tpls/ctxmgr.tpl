@@ -9,7 +9,10 @@
         %for p in power:
         <a href="/ctxmgr/{{str(p.id)}}">{{p.name}}</a>
         %end
-        <br/> 
+        <br/>
+        %if lname:
+        当前分类：{{lname}}
+        %end
         %for lid,lname in bread_nav:
         >><a href="/ctxmgr/{{lid}}">{{lname}}</a>
         %end
@@ -40,7 +43,7 @@
 
     <div>
     <form method="POST">
-        <input type="text" name="title" size="100" placeholder="请输入标题" />
+        <input type="text" name="title" size="97" placeholder="请输入标题" />
         <input type="hidden" name="uid" value="{{id}}" />
         <br/>
         <textarea name="txt" cols="73" rows="10" placeholder="在此输入内容"></textarea>

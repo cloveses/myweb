@@ -1,7 +1,7 @@
 from .tools import make_pw,power_to_str
 from .tools import get_power as get_power_set
 from .cms import User,ses
-from .level import get_sub_lvls,get_lvl_name
+from .level import get_sub_lvls,get_lvl_name,lid_to_lvl
 
 def add_user(name,password):
     pw = make_pw(name,password)
@@ -60,7 +60,8 @@ def get_power(uid):
         if u.user_type == 100:
             return get_sub_lvls('')
         else:
-            return get_power_set(u.power) if u.power else []
+            res = get_power_set(u.power) if u.power else []
+            return [lid_to_lvl(i) for i in res]
     return []
 
 def add_power(uids,powerids):
