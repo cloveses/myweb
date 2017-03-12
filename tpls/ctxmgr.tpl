@@ -7,28 +7,28 @@
     % include('tpls/nav.tpl',user_type=user_type)
     <div>
         %for p in power:
-        <a href="/ctxmgr/{{str(p.id)}}">{{p.name}}</a>
+        <a href="/ctxmgr/{{str(p.id)}}" class="ctxmgr-a">{{p.name}}</a>
         %end
         <br/>
         %if lname:
         当前分类：{{lname}}
         %end
         %for lid,lname in bread_nav:
-        >><a href="/ctxmgr/{{lid}}">{{lname}}</a>
+        >><a href="/ctxmgr/{{lid}}" class="ctxmgr-a">{{lname}}</a>
         %end
         %for nv in next_lvls:
-        <a href="/ctxmgr/{{str(nv.id)}}">{{nv.name}}</a>
+        <a href="/ctxmgr/{{str(nv.id)}}" class="ctxmgr-a">{{nv.name}}</a>
         %end
     </div>
     <div>
-        <table>
+        <table class="pure-table">
             %for new in news:
             <tr>
                 <td>{{new.title}}</td>
                 <td>{{new.txt[:40]}}</td>
                 <td><input type="checkbox" {{"checked" if new.is_released else ""}}  form="save_check" name="{{str(new.id)}}-rels" value="{{str(new.id)}}" />审核通过</td>
-                <td><a href="/delctx/{{str(new.id)}}">删除</a></td>
-                <td><a href="/editctx/{{lid}}/{{str(new.id)}}">修改</a></td>
+                <td><a href="/delctx/{{str(new.id)}}" class="ctxmgr-a">删除</a></td>
+                <td><a href="/editctx/{{lid}}/{{str(new.id)}}" class="ctxmgr-a">修改</a></td>
             </tr>
             %end
         </table>
@@ -40,7 +40,7 @@
         </form>
         %end
     </div>
-
+%if lname:
     <div>
     <form method="POST">
         <input type="text" name="title" size="97" placeholder="请输入标题" />
@@ -58,5 +58,7 @@
     "filebrowserImageUploadUrl":"/ckupload"
     }); 
     </script>
-
+%else:
+    <h2>请选择分类添加内容！</h2>
+%end
 %end
