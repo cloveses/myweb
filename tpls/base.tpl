@@ -8,9 +8,15 @@
     <link rel="stylesheet" type="text/css" href="/static/purecss/pure-min.css" />
     <title>易用内容管理系统</title>
 </head>
-<body style="background-color:#D1DA87;">
-<div style="margin:100px auto 0 auto;width:800px">
+<body style="background-color:#FFF;">
+<div id="mybody">
 {{!base}}
+</div>
+<!-- <hr color="#dfdff0" size="1" /> -->
+<div class="pure-g">
+    <div class="pure-u-1-1" style="text-align: center;">
+        <footer>&copy;2017 宿州环保工程学校 刘海名师工作坊</footer>
+    </div>
 </div>
 </body>
 </html>

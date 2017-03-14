@@ -1,25 +1,45 @@
 % rebase('tpls/base.tpl')
-<div>{{info if info else ""}}
+<div class="pure-g">
+<div class="pure-u-1-1" style="text-align: right;">
+    {{info if info else ""}}
     %if name:
-    你好，{{name}}|<a href="/me/{{id}}">个人中心</a>|<a href="/logout">退出</a>
+    <span style="margin-right: 1em;">你好，{{name}}</span>|
+    <span style="margin:0 0.2em;"><a href="/me/{{id}}">个人中心</a></span>|
+    <span style="margin:0 0.2em;"><a href="/logout">退出</a></span>
     %else:
-    <form action="" method="POST">
-    姓名：<input type="text" name="name"  />
-    密码：<input type="password" name="password" />
-    验证：<input type="text" name="verify_text" />
-    <img src="/verify" />
-    <input type="submit" value="登录" />
+    <form class="pure-form" action="" method="POST">
+    姓名：<input type="text" name="name" size="6" placeholder="姓名" />
+    密码：<input type="password" name="password" size="6" placeholder="密码" />
+    验证：<input type="text" name="verify_text" size="6" placeholder="验证码" />
+    <img src="/verify" height="35" style="vertical-align:middle;"/>
+    <input type="submit" value="登录" class="pure-button" />
+    <a href="/signup" class="pure-button">注册</a>
     </form>
-    <a href="/signup">注册</a>
+    
     %end
 </div>
-
+</div>
+<div class="pure-g">
+<div class="pure-u-1-1 headimg">
+</div>
+</div>
     % include('tpls/mnav.tpl',navs=navs)
-    % for nav,news in newslist:
-        <div style="border: 2px solid red;">
-        {{nav.name}}<a href="/{{nav.id}}">更多</a>
+
+    %cols = 2
+    %for i in range(0,len(newslist),cols):
+    <div class="pure-g myclass">
+        %for nav,news in newslist[i:i+cols]:
+        <div class="pure-u-1-{{cols}}">
+        <div class="mybox">
+        <div>{{nav.name}}<a href="/{{nav.id}}" class="more">更多</a></div>
         %for new in news:
-            <li><a href="/news/{{str(new.id)}}{{'/'+plid if plid else ''}}" title="{{new.title}}">{{new.title}}</a></li>
+            <li>
+                <a href="/news/{{str(new.id)}}{{'/'+plid if plid else ''}}" title="{{new.title}}">{{new.title}}</a>
+                <span class="mydate">{{str(new.release_date)[:10]}}</span>
+            </li>
         %end
         </div>
+        </div>
+        %end
+    </div>
     %end
