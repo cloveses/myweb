@@ -13,7 +13,8 @@ def db_init():
     Base.metadata.create_all(engine)
 
 def get_session():
-    engine = create_engine(DBSTR, echo=True)
+    # engine = create_engine(DBSTR, echo=True)
+    engine = create_engine(DBSTR)
     Session = sessionmaker(bind=engine)
     # return Session()
     return scoped_session(Session)
