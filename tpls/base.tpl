@@ -12,11 +12,19 @@
 <div id="mybody">
 {{!base}}
 </div>
-<!-- <hr color="#dfdff0" size="1" /> -->
 <div class="pure-g">
     <div class="pure-u-1-1" style="text-align: center;">
         <footer>&copy;2017 宿州环保工程学校 刘海名师工作坊</footer>
     </div>
 </div>
+<script type="text/javascript">
+    function display_img(){
+            $("#verify_text").after("<img src='/verify' height='35' style='vertical-align:middle;'/>");
+            $("body").off("focus","#verify_text");
+        }
+    $(function(){
+        $("body").on("focus","#verify_text",display_img);
+    });
+</script>
 </body>
 </html>

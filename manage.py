@@ -60,7 +60,7 @@ def index():
         name = request.get_cookie('name',secret=secret)
         id = request.get_cookie('id',secret=secret)
         user_type = request.get_cookie('user_type',secret=secret)
-        print('.....',name,id,user_type)
+        # print('.....',name,id,user_type)
         return template('tpls/index.tpl',
             name=name,
             id=id,
@@ -263,7 +263,7 @@ def ctxmgr(lid='',page=0):
         if action == "add":
             add_ctx()
         elif action == "release":
-            print('.........',action)
+            # print('.........',action)
             release()
 
 def add_ctx():
@@ -341,7 +341,7 @@ def mindex(plid=''):
     if request.method == 'GET':
         name = request.get_cookie('name',secret=secret)
         id = request.get_cookie('id',secret=secret)
-        print(name,'......',id)
+        # print(name,'......',id)
         return template('tpls/mindex.tpl',
             name=name,
             id=id,
@@ -383,7 +383,7 @@ def mindex(plid=''):
 def detail(nid,plid=''):
     navs = level.get_next_lvls(plid)
     anews = news.get_anews(nid)
-    print('........',anews)
+    # print('........',anews)
     name = request.get_cookie('name',secret=secret)
     id = request.get_cookie('id',secret=secret)
     return template('tpls/detail.tpl',
@@ -463,3 +463,4 @@ if __name__ == '__main__':
     if ADD_AMDIN:
         aduser.add_admin_user(**DEFAULT_ADMIN)
     run(port=9099,debug=True,reloader=True)
+    # run(server='waitress',port=9099,debug=True,reloader=True)

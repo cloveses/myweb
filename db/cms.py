@@ -2,7 +2,7 @@ import datetime
 from sqlalchemy import create_engine  
 from sqlalchemy.ext.declarative import declarative_base  
 from sqlalchemy import Column, Integer, String, Sequence, Text, DateTime, Boolean
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker,scoped_session
 
 # DBSTR = 'sqlite:///:memory:'
 DBSTR = 'sqlite:///mydata.db'
@@ -15,7 +15,8 @@ def db_init():
 def get_session():
     engine = create_engine(DBSTR, echo=True)
     Session = sessionmaker(bind=engine)
-    return Session()
+    # return Session()
+    return scoped_session(Session)
 
 ses = get_session()
 
