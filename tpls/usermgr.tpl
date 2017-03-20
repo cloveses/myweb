@@ -12,7 +12,7 @@
 
 % include('tpls/nav.tpl',user_type=user_type)
 <div>
-    <table>
+    <table style="margin-top: 20px;" class="pure-table">
         %for u,p in zip(users,powers):
         <tr>
             <td><input type="checkbox" name="{{str(u.id)}}-chkbox" value="{{str(u.id)}}" form="save_power" /></td>
@@ -32,7 +32,7 @@
         </tr>
         %end
     </table>
-    <table>
+    <table style="margin-top: 20px;" class="pure-table">
         %for lvl in lvls:
         <tr>
             <td><input type="checkbox" name="{{str(lvl.id)}}-vchkbox" value="{{str(lvl.id)}}"  form="save_power" /></td>
@@ -48,10 +48,12 @@
     <input type="submit" value="保存权限" />
     </form>
 </div>
-<div>
+<div style="margin-top: 20px;">
 <form action="" method="POST">
-    <input type="text" name="name" required="required" />
-    <input type="password" name="password" required="required" />
+    <label for="name">用户名：</label>
+    <input type="text" name="name" placeholder="用户名" required="required" />
+    <label for="password">密码：</label>
+    <input type="password" name="password" placeholder="密码" required="required" />
     <input type="hidden" name="action" value="add" />
     <input type="submit" value="添加" />
 </form>

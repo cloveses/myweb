@@ -6,10 +6,10 @@ import random
 import os
 
 def get_text():
+    mystr = "ABCDEFGHJKMNPQRSTUVWXYZ"
     text = []
-    for i in range(2):
-        text.append(chr(random.randint(65,90)))
-        text.append(chr(random.randint(97,122)))
+    for i in range(4):
+        text.append(random.choice(mystr))
     random.shuffle(text)
     return ''.join(text)
 
