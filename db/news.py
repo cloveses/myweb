@@ -51,13 +51,15 @@ def check_news(nid,uid,user_type):
 def get_news(lid='',limit=10,page=0):
     if not lid:
         return []
+    sub_ids = []
     if lid:
         sub_lvls = get_sub_lvls(lid)
+        sub_ids.append(lid)
+        sub_ids.extend([i.id for i in sub_lvls])
     else:
         sub_lvls = ses.query(Level).filter_by(c=0).all()
-    if sub_lvls:
-        sub_ids = [lid,]
-        sub_ids.extend([i.id for i in sub_lvls])
+        sub_ids = [i.id for i in sub_lvls]
+    if sub_ids:
         start = page * limit
         res = ses.query(News).filter(News.category.in_(sub_ids)).\
                         order_by(News.release_date).all()[::-1]

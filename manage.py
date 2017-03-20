@@ -336,6 +336,7 @@ def mindex(plid=''):
     info = response.set_cookie('info','',secret=secret)
     response.set_cookie('info','',secret=secret)
     navs = level.get_next_lvls(plid)
+    navs = navs if navs else [level.get_lvl(plid)]
     newslist = [(nav,news.get_lvl_news(str(nav.id))) 
                 for nav in navs]
     if request.method == 'GET':
@@ -382,6 +383,7 @@ def mindex(plid=''):
 @route('/news/<nid>/<plid>')
 def detail(nid,plid=''):
     navs = level.get_next_lvls(plid)
+    navs = navs if navs else [level.get_lvl(plid)]
     anews = news.get_anews(nid)
     # print('........',anews)
     name = request.get_cookie('name',secret=secret)

@@ -154,3 +154,6 @@ def get_lvl_name(lid):
     lvl = ses.query(Level).filter_by(id=lid).first()
     if lvl:
         return lvl.name
+
+def get_lvl(lid):
+    return ses.query(Level).filter_by(id=lid).first()

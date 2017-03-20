@@ -6,22 +6,33 @@
 %if name and power:
     % include('tpls/nav.tpl',user_type=user_type)
     <div>
+        <p>所有分类：</p>
         %for p in power:
-        <a href="/ctxmgr/{{str(p.id)}}" class="ctxmgr-a">{{p.name}}</a>
+        <a href="/ctxmgr/{{str(p.id)}}" class="pure-button ctxmgr-a">{{p.name}}</a>
         %end
-        <br/>
+        <p>
         %if lname:
         当前分类：{{lname}}
         %end
         %for lid,lname in bread_nav:
-        >><a href="/ctxmgr/{{lid}}" class="ctxmgr-a">{{lname}}</a>
+        >><a href="/ctxmgr/{{lid}}" class="pure-button ctxmgr-a">{{lname}}</a>
         %end
         %for nv in next_lvls:
-        <a href="/ctxmgr/{{str(nv.id)}}" class="ctxmgr-a">{{nv.name}}</a>
+        <a href="/ctxmgr/{{str(nv.id)}}" class="pure-button ctxmgr-a">{{nv.name}}</a>
         %end
+        </p>
     </div>
     <div>
         <table class="pure-table">
+        %if news:
+            <thead>
+                <th>标题</th>
+                <th>内容</th>
+                <th>审核</th>
+                <th>删除</th>
+                <th>编辑</th>
+            </thead>
+        %end
             %for new in news:
             <tr>
                 <td>{{new.title}}</td>
@@ -42,6 +53,7 @@
     </div>
 %if lname:
     <div>
+    <p>为当前分类添加内容：</p>
     <form method="POST">
         <input type="text" name="title" size="97" placeholder="请输入标题" />
         <input type="hidden" name="uid" value="{{id}}" />
