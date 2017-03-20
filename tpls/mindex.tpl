@@ -7,7 +7,7 @@
     <span style="margin:0 0.2em;"><a href="/me/{{id}}">个人中心</a></span>|
     <span style="margin:0 0.2em;"><a href="/logout">退出</a></span>
     %else:
-    <form class="pure-form" action="" method="POST">
+    <form class="pure-form" action="/" method="POST">
     姓名：<input type="text" name="name" size="6" placeholder="姓名" />
     密码：<input type="password" name="password" size="6" placeholder="密码" />
     验证：<input type="text" id="verify_text" name="verify_text" size="6" placeholder="验证码" />
@@ -33,7 +33,7 @@
         <div>{{nav.name}}<a href="/{{nav.id}}" class="more">更多</a></div>
         %for new in news:
             <li>
-                <a href="/news/{{str(new.id)}}{{'/'+plid if plid else ''}}" title="{{new.title}}">{{new.title}}</a>
+                <a href="/news/{{str(new.id)}}" title="{{new.title}}">{{new.title}}</a>
                 <span class="mydate">{{str(new.release_date)[:10]}}</span>
             </li>
         %end

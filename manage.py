@@ -320,8 +320,6 @@ def editctx(lid,nid):
             news.edit_news(nid,uid,title,txt,user_type)
         redirect('/ctxmgr/' + lid)
 
-
-
 @route('/logout')
 def logout():
     response.delete_cookie('id')
@@ -330,26 +328,23 @@ def logout():
     redirect('/')
 
 @route('/',method=["GET","POST"])
-@route('/<plid>',method=["GET","POST"])
-def mindex(plid=''):
+def mindex():
     info = request.get_cookie('info',secret=secret)
     info = response.set_cookie('info','',secret=secret)
     response.set_cookie('info','',secret=secret)
-    navs = level.get_next_lvls(plid)
-    navs = navs if navs else [level.get_lvl(plid)]
-    newslist = [(nav,news.get_lvl_news(str(nav.id))) 
+    navs = level.get_next_lvls('')
+    newslist = [(nav,news.get_lvl_news(str(nav.id))[:7]) 
                 for nav in navs]
     if request.method == 'GET':
         name = request.get_cookie('name',secret=secret)
         id = request.get_cookie('id',secret=secret)
-        # print(name,'......',id)
         return template('tpls/mindex.tpl',
             name=name,
             id=id,
             info=info,
             navs=navs,
             newslist=newslist,
-            plid=plid
+            plid=''
             )
     elif request.method == 'POST':
         verify_text = request.get_cookie('verify_text',secret=secret)
@@ -368,7 +363,7 @@ def mindex(plid=''):
                     info=info,
                     navs=navs,
                     newslist=newslist,
-                    plid=plid
+                    plid=''
                     )
             else:
                 response.set_cookie('info',
@@ -379,13 +374,36 @@ def mindex(plid=''):
                 secret=secret)
         redirect('/')
 
-@route('/news/<nid>')
-@route('/news/<nid>/<plid>')
-def detail(nid,plid=''):
+@route('/<plid:int>',method=["GET",])
+@route('/<plid:int>/<page>',method=["GET",])
+def pindex(plid='0',page=1):
+    info = request.get_cookie('info',secret=secret)
+    info = response.set_cookie('info','',secret=secret)
+    response.set_cookie('info','',secret=secret)
     navs = level.get_next_lvls(plid)
-    navs = navs if navs else [level.get_lvl(plid)]
+    mnewslist,pages = news.get_lvl_page_news(int(plid),limit=20,page=int(page)-1)
+    all_navs = [level.get_lvl(plid),]
+    all_navs.extend(navs)
+    newslist = [(nav,news.get_lvl_news(str(nav.id))[:7]) 
+                for nav in navs]
+    name = request.get_cookie('name',secret=secret)
+    id = request.get_cookie('id',secret=secret)
+    return template('tpls/more.tpl',
+        name=name,
+        id=id,
+        info=info,
+        navs=all_navs,
+        mnewslist=mnewslist,
+        pages=pages,
+        newslist=newslist,
+        plid=str(plid)
+        )
+
+@route('/news/<nid>')
+def detail(nid,plid=''):
+    navs = level.get_next_lvls('')
     anews = news.get_anews(nid)
-    # print('........',anews)
+    more_news = news.get_lvl_news(anews.category)[:15]
     name = request.get_cookie('name',secret=secret)
     id = request.get_cookie('id',secret=secret)
     return template('tpls/detail.tpl',
@@ -393,6 +411,7 @@ def detail(nid,plid=''):
         id=id,
         navs=navs,
         news=anews,
+        more_news=more_news,
         plid=plid
         )
 

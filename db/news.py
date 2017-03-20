@@ -74,6 +74,14 @@ def get_lvl_news(lid):
         return res if res else []
     return []
 
+def get_lvl_page_news(lid,limit=10,page=0):
+    if lid:
+        res = ses.query(News).filter(News.category==lid).\
+                        order_by(News.release_date).all()[::-1]
+        pages = list(range(0,len(res),limit))
+        pages = [i // limit + 1 for i in pages]
+        return [res,pages] if res else [[],[]]
+    return [[],[]]
 
 def get_last_news(sub_ids,limit=3):
     r = News.objects(id__in=sub_ids).order_by('-release_date')[0:limit]
