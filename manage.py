@@ -2,7 +2,7 @@ import os
 from bottle import route,run,error,static_file,request,response,template,redirect
 from tools.verify_gen import get_verify
 # import cmstools,mtools
-from db import aduser,user,level,news
+from db import aduser,user,level,news,tools
 
 secret = 'df%$%^&*()_++((*&^%$:""><<<Q#TG'
 @error(404)
@@ -26,6 +26,11 @@ def get_ckeditor(filename):
 @route('/img/<filename:re:.*.[js|css|jpg|jpeg|png]$>')
 def get_img(filename):
     rootdir = './uploads'
+    return static_file(filename,root=rootdir)
+
+@route('/active/<filename:re:.*.[gif|jpg|jpeg|png]$>')
+def get_active(filename):
+    rootdir = './activeimg'
     return static_file(filename,root=rootdir)
 
 @route('/ckupload',method=["POST",])
@@ -185,6 +190,10 @@ def lvlmgr(parent_lid=''):
             name = request.forms.getunicode('name').strip()
             lid = request.forms.getunicode('lid')
             level.edit_level(name,lid)
+        elif action == 'insert':
+            name = request.forms.getunicode('name').strip()
+            lid = request.forms.getunicode('lid')
+            level.insert_before_lvl(name,lid)
         url = '/lvlmgr/' + parent_lid if parent_lid else '/lvlmgr'
         redirect(url)
 
@@ -320,6 +329,37 @@ def editctx(lid,nid):
             news.edit_news(nid,uid,title,txt,user_type)
         redirect('/ctxmgr/' + lid)
 
+@route('/imgmgr',method=['GET','POST'])
+def imgmgr():
+    info = request.get_cookie('info',secret=secret)
+    response.set_cookie('info','',secret=secret)
+    uid = request.get_cookie('id',secret=secret)
+    login_verify()
+    if request.method == 'GET':
+        name = request.get_cookie('name',secret=secret)
+        user_type = request.get_cookie('user_type',secret=secret)
+        return template('tpls/imgmgr.tpl',
+            name=name,
+            id=uid,
+            user_type=user_type,
+            info=info,
+            )
+    elif request.method == "POST":
+        info = "上传成功！"
+        upload = request.files.get('upload')
+        fname,fext = os.path.splitext(upload.filename)
+        if fext in ['.jpg','.jpeg','.png','.gif']:
+            rootpath = './activeimg'
+            if not os.path.exists(rootpath):
+                os.makedirs(rootpath)
+            while os.path.exists('/'.join((rootpath,fname+fext))):
+                fname += 'c'
+            upload.save('/'.join((rootpath,fname+fext)))
+        else:
+            info = '上传失败，你上传的不是图片文件。'
+        response.set_cookie('info',info,secret=secret)
+        redirect('/imgmgr')
+
 @route('/logout')
 def logout():
     response.delete_cookie('id')
@@ -335,6 +375,8 @@ def mindex():
     navs = level.get_next_lvls('')
     newslist = [(nav,news.get_lvl_news(str(nav.id))[:7]) 
                 for nav in navs]
+    activeimgs = tools.get_imgs('./activeimg/')
+    activeimgs = ['/active/'+i for i in activeimgs]
     if request.method == 'GET':
         name = request.get_cookie('name',secret=secret)
         id = request.get_cookie('id',secret=secret)
@@ -344,7 +386,8 @@ def mindex():
             info=info,
             navs=navs,
             newslist=newslist,
-            plid=''
+            plid='',
+            activeimgs=activeimgs,
             )
     elif request.method == 'POST':
         verify_text = request.get_cookie('verify_text',secret=secret)
@@ -363,7 +406,8 @@ def mindex():
                     info=info,
                     navs=navs,
                     newslist=newslist,
-                    plid=''
+                    plid='',
+                    activeimgs=activeimgs,
                     )
             else:
                 response.set_cookie('info',

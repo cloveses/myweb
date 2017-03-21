@@ -25,7 +25,7 @@
     % include('tpls/mnav.tpl',navs=navs)
 
     %cols = 2
-    %for i in range(0,len(newslist),cols):
+    %for i in range(0,2 * cols,cols):
     <div class="pure-g myclass">
         %for nav,news in newslist[i:i+cols]:
         <div class="pure-u-1-{{cols}}">
@@ -39,6 +39,47 @@
         %end
         </div>
         </div>
+        %end
+    </div>
+    %end
+        <script type="text/javascript" src="/static/marquee.js"></script>
+        <!--容器可以使用div，内容中使用ul li，那么框1就是div1，框2就是div2，需要两个div在一行，就需要设置div的float：left属性--> 
+    <!--当然如果你对于css不是很了解，也可以使用table来实现，用td1和td2来实现。本人对table有种不喜，所以就通过div来做了--> 
+        <div id="container" style="width:980px;height:160px;overflow:hidden;margin-left:5px;"> 
+            <div id="longwidth" style="height:80px;width:1000%;"> 
+                <div id="div1" class="kuang" style="float:left;height:160px;"> 
+    <!--            <img src="./assets/img/98339876.jpg" width="240px" height="160px" /> 
+                    <img src="./assets/img/98339876.jpg" width="240px" height="160px" /> 
+                    <img src="./assets/img/98339876.jpg" width="240px" height="160px" /> 
+                    <img src="./assets/img/98339876.jpg" width="240px" height="160px" /> 
+                    <img src="./assets/img/98339876.jpg" width="240px" height="160px" /> 
+                    <img src="./assets/img/98339876.jpg" width="240px" height="160px" /> 
+                    <img src="./assets/img/98339876.jpg" width="240px" height="160px" />  -->
+                    %for file_path in activeimgs:
+                        <img src="{{file_path}}" width="240px" height="160px" />
+                    %end
+                </div> 
+                <div id="div2" class="kuang" style="float:left;height:160px;margin-left:5px;"></div> 
+            </div> 
+        </div>
+
+    %for i in range(2 * cols,len(newslist),cols):
+    <div class="pure-g myclass">
+        %for nav,news in newslist[i:i+cols]:
+        <div class="pure-u-1-{{cols}}">
+        <div class="mybox">
+        <div>{{nav.name}}<a href="/{{nav.id}}" class="more">更多</a></div>
+        %for new in news:
+            <li>
+                <a href="/news/{{str(new.id)}}" title="{{new.title}}">{{new.title}}</a>
+                <span class="mydate">{{str(new.release_date)[:10]}}</span>
+            </li>
+        %end
+        </div>
+        </div>
+        %end
+        %if i >= 2 * cols:
+            %break
         %end
     </div>
     %end

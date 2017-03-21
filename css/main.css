@@ -7,6 +7,10 @@ a:hover {
     color: blue;
 }
 
+p {
+    line-height:200%;
+}
+
 #mybody {
     margin: 0 auto;
     width: 980px;

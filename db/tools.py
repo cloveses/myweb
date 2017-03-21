@@ -1,4 +1,5 @@
 import hashlib
+import os
 
 SALT = '&**&^#@@hjkjk^GGIO))(&^&^^}{HYJjg>?<MM?!@@'
 
@@ -17,3 +18,11 @@ def get_power(powerstr):
 def power_to_str(powerset):
     power = {str(i) for i in powerset}
     return ','.join(power)
+
+def get_imgs(path,nums=10):
+    if os.path.exists(path):
+        files = list(os.walk(path))[0][2]
+        if not files:
+            return []
+        return sorted(files,key=lambda fn:os.path.getctime(path+fn))[:10]
+    return []

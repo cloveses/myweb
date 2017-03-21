@@ -6,6 +6,11 @@
             $('#'+idstr).show();
             $(".editbutton").hide()
         });
+        $(".insertbutton").click(function(){
+            idstr = $(this).attr('name');
+            $('#'+idstr).show();
+            $(".insertbutton").hide()
+        });
     });
 </script>
 % include('tpls/userinfo.tpl',name=name,id=id)
@@ -30,6 +35,17 @@
                 <input type="hidden" name="lid" value="{{str(lvl.id)}}" />
                 <input type="hidden" name="action" value="edit" />
                 <input type="submit" value="保存" />
+            </form>
+            </span>
+            </td>
+
+            <td><button class="insertbutton" name="insert{{str(lvl.id)}}" type="button" class="pure-button">插入</button></td>
+            <td><span id="insert{{str(lvl.id)}}" style="display:none;">
+            <form method="POST">
+                <input type="text" size="8" name="name" placeholder="分类名称" />
+                <input type="hidden" name="lid" value="{{str(lvl.id)}}" />
+                <input type="hidden" name="action" value="insert" />
+                <input type="submit" value="插入" />
             </form>
             </span>
             </td>

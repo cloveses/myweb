@@ -36,7 +36,7 @@
             %for new in news:
             <tr>
                 <td>{{new.title}}</td>
-                <td>{{new.txt[:40]}}</td>
+                <td>{{new.txt[:20]}}</td>
                 <td><input type="checkbox" {{"checked" if new.is_released else ""}}  form="save_check" name="{{str(new.id)}}-rels" value="{{str(new.id)}}" />审核通过</td>
                 <td><a href="/delctx/{{str(new.id)}}" class="ctxmgr-a">删除</a></td>
                 <td><a href="/editctx/{{lid}}/{{str(new.id)}}" class="ctxmgr-a">修改</a></td>

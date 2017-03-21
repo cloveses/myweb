@@ -1,6 +1,10 @@
 from sqlalchemy.sql import func
 from .cms import Level,ses
 
+def lid_to_lvl(lid):
+    if lid:
+        return ses.query(Level).filter_by(id=lid).first()
+
 def get_pos(parent_r):
     lvln = ses.query(Level).filter_by(r=parent_r).first()
     if not lvln:
@@ -19,7 +23,7 @@ def move_after(r):
     if lvls:
         for lvl in lvls:
             lvl.r += 1
-        ses.commit()
+            ses.commit()
 
 def insert_lvl(name,parent_r):
     r_c = get_pos(parent_r)
@@ -27,11 +31,12 @@ def insert_lvl(name,parent_r):
         r,c = r_c
         move_after(r)
         ses.add(Level(name=name,r=r,c=c))
+        ses.commit()
     else:
         r = ses.query(func.max(Level.r))
         r += 1
         ses.add(Level(name=name,r=r,c=0))
-    ses.commit()
+        ses.commit()
 
 
 def move_before(r):
@@ -39,6 +44,15 @@ def move_before(r):
     if lvls:
         for lvl in lvls:
             lvl.r += 1
+            ses.commit()
+
+def insert_before_lvl(name,after_lid):
+    after_lvl = lid_to_lvl(after_lid)
+    if after_lvl:
+        r = after_lvl.r
+        c = after_lvl.c
+        move_after(r)
+        ses.add(Level(name=name,r=r,c=c))
         ses.commit()
 
 def add_level(name,parent_lid=''):
@@ -78,6 +92,9 @@ def get_sub_lvls(lid):
         return sub_lvls if sub_lvls else []
     return []
 
+def get_lvl(lid):
+    return ses.query(Level).filter_by(id=lid).first()
+
 def del_level(lid):
     lvl = ses.query(Level).filter_by(id=lid).first()
     if lvl:
@@ -90,8 +107,8 @@ def del_levels(lid):
     if lid:
         sub_lvls = get_sub_lvls(lid)
         for l in sub_lvls:
-            ses.delete(l)
-        ses.commit()
+            del_level(l.id)
+        del_level(lid)
 
 def get_parent_lvl(lid):
     v = ses.query(Level).filter_by(id=lid).first()
@@ -146,14 +163,7 @@ def get_next_lvls(parent_lid):
         return res if res else []
     return []
 
-def lid_to_lvl(lid):
-    if lid:
-        return ses.query(Level).filter_by(id=lid).first()
-
 def get_lvl_name(lid):
     lvl = ses.query(Level).filter_by(id=lid).first()
     if lvl:
         return lvl.name
-
-def get_lvl(lid):
-    return ses.query(Level).filter_by(id=lid).first()
