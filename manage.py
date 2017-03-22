@@ -354,7 +354,11 @@ def imgmgr():
                 os.makedirs(rootpath)
             while os.path.exists('/'.join((rootpath,fname+fext))):
                 fname += 'c'
-            upload.save('/'.join((rootpath,fname+fext)))
+            # upload.save('/'.join((rootpath,fname+fext)))
+            from PIL import Image
+            myimg = Image.open(upload.file)
+            myimg.thumbnail((240,160))
+            myimg.save('/'.join((rootpath,fname+fext)))
         else:
             info = '上传失败，你上传的不是图片文件。'
         response.set_cookie('info',info,secret=secret)

@@ -28,7 +28,7 @@
             % if news:
                 <div class="details">
                 <p class="details_title">{{news.title}}</p>
-                <p class="details_title">{{news.author}} {{news.release_date[:10]}}</p>
+                <p class="details_title">{{news.author}} {{str(news.release_date)[:10]}}</p>
                     <div class="details_text">
                      {{!news.txt}}
                     </div>
