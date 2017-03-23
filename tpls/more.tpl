@@ -37,7 +37,7 @@
                 </table>
                 <p style="text-align: center;">
                     %for p in pages:
-                    <a href="/{{plid}}/{{p}}">第{{p}}页</a>
+                    <a href="/{{plid}}/{{p}}">第{{p+1}}页</a>
                     %end
                 </p>
             </div>

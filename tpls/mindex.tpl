@@ -78,8 +78,5 @@
         </div>
         </div>
         %end
-        %if i >= 2 * cols:
-            %break
-        %end
     </div>
     %end

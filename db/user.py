@@ -16,7 +16,6 @@ def reg_user(name,password):
 
 def ch_pw(oid,name,opw,npw):
     opw = make_pw(name,opw)
-    ou = OrdUser.objects(id=ObjectId(oid)).filter(password=opw)
     ou = ses.query(OrdUser).filter_by(name=name).filter_by(password=password)
     ou = ou.first()
     if ou:

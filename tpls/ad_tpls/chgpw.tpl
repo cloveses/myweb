@@ -1,8 +1,8 @@
-% rebase('tpls/base.tpl')
+% rebase('tpls/ad_tpls/base.tpl')
 <div>
-% include('tpls/userinfo.tpl',name=name,id=id)
+% include('tpls/ad_tpls/aduserinfo.tpl',name=name,id=id)
 
-% include('tpls/nav.tpl',user_type=user_type)
+% include('tpls/ad_tpls/nav.tpl',user_type=user_type)
 <div>
 <form action="" method="POST">
     <p>旧密码：　<input type="password" name="opassword" required="required" /></p>

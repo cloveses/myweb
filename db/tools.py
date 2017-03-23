@@ -26,3 +26,10 @@ def get_imgs(path,nums=10):
             return []
         return sorted(files,key=lambda fn:os.path.getctime(path+fn))[:10]
     return []
+
+def get_pages(sum_pages,page,p=3):
+    min_page = page - p if page - p >= 0 else 0
+    max_page = min_page + p * 2 + 1
+    if max_page > sum_pages:
+        max_page = sum_pages
+    return [i for i in range(min_page,max_page)]

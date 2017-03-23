@@ -1,4 +1,4 @@
-% rebase('tpls/base.tpl')
+% rebase('tpls/ad_tpls/base.tpl')
 <script type="text/javascript">
     $(function(){
         $(".editbutton").click(function(){
@@ -8,9 +8,9 @@
         });
     });
 </script>
-% include('tpls/userinfo.tpl',name=name,id=id)
+% include('tpls/ad_tpls/aduserinfo.tpl',name=name,id=id)
 
-% include('tpls/nav.tpl',user_type=user_type)
+% include('tpls/ad_tpls/nav.tpl',user_type=user_type)
 <div>
     <table style="margin-top: 20px;" class="pure-table">
         %for u,p in zip(users,powers):

@@ -1,10 +1,10 @@
-% rebase('tpls/base.tpl')
+% rebase('tpls/ad_tpls/base.tpl')
 <script language="javascript" type="text/javascript" src="/ckeditor/ckeditor.js"></script>
-% include('tpls/userinfo.tpl',name=name,id=id)
+% include('tpls/ad_tpls/aduserinfo.tpl',name=name,id=id)
 
 
 %if name and power:
-% include('tpls/nav.tpl',user_type=user_type)
+% include('tpls/ad_tpls/nav.tpl',user_type=user_type)
 %end
 %if name:
     <div>

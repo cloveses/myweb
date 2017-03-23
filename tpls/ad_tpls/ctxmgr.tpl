@@ -1,10 +1,10 @@
-% rebase('tpls/base.tpl')
+% rebase('tpls/ad_tpls/base.tpl')
 <script language="javascript" type="text/javascript" src="/ckeditor/ckeditor.js"></script>
-% include('tpls/userinfo.tpl',name=name,id=id)
+% include('tpls/ad_tpls/aduserinfo.tpl',name=name,id=id)
 
 
 %if name and power:
-    % include('tpls/nav.tpl',user_type=user_type)
+    % include('tpls/ad_tpls/nav.tpl',user_type=user_type)
     <div>
         <p>所有分类：</p>
         %for p in power:
@@ -28,6 +28,7 @@
             <thead>
                 <th>标题</th>
                 <th>内容</th>
+                <th>日期</th>
                 <th>审核</th>
                 <th>删除</th>
                 <th>编辑</th>
@@ -36,13 +37,19 @@
             %for new in news:
             <tr>
                 <td>{{new.title}}</td>
-                <td>{{new.txt[:20]}}</td>
+                <td>{{new.txt[:10]}}</td>
+                <td>{{str(new.release_date)[:19]}}</td>
                 <td><input type="checkbox" {{"checked" if new.is_released else ""}}  form="save_check" name="{{str(new.id)}}-rels" value="{{str(new.id)}}" />审核通过</td>
-                <td><a href="/delctx/{{str(new.id)}}" class="ctxmgr-a">删除</a></td>
-                <td><a href="/editctx/{{lid}}/{{str(new.id)}}" class="ctxmgr-a">修改</a></td>
+                <td><a href="/delctx/{{str(new.id)}}/{{lid}}{{'/'+str(page) if page else ''}}" class="ctxmgr-a">删除</a></td>
+                <td><a href="/editctx/{{lid}}/{{str(new.id)}}{{'/'+str(page) if page else ''}}" class="ctxmgr-a">修改</a></td>
             </tr>
             %end
         </table>
+        <p>
+            %for i in pages:
+            <a href="/ctxmgr/{{lid}}/{{i}}">第{{i+1}}页　</a>
+            %end
+        </p>
         %if news:
         <form id="save_check" method="POST">
             <input type="hidden" name="lid" value="{{lid}}" />

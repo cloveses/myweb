@@ -1,6 +1,7 @@
 from .cms import Level,News,User,ses
 from .level import get_bread_nav,get_sub_lvls
 from .tools import get_power,power_to_str
+import datetime
 
 def get_anews(nid):
     news = ses.query(News).filter_by(id=nid).first()
@@ -32,12 +33,13 @@ def edit_news(nid,uid,title,txt,user_type):
     if news:
         news.title = title
         news.txt = txt
+        news.release_date = datetime.datetime.now()
         ses.commit()
 
-def del_news(nid,uid):
+def del_news(nid,uid,user_type):
     news = ses.query(News).filter_by(id=nid).first()
     u = ses.query(User).filter_by(id=uid).first()
-    if has_power(news.category,u.power):
+    if user_type == 100 or has_power(news.category,u.power):
         ses.delete(news)
         ses.commit()
 
@@ -50,7 +52,7 @@ def check_news(nid,uid,user_type):
 
 def get_news(lid='',limit=10,page=0):
     if not lid:
-        return []
+        return [],0
     sub_ids = []
     if lid:
         sub_lvls = get_sub_lvls(lid)
@@ -64,8 +66,9 @@ def get_news(lid='',limit=10,page=0):
         res = ses.query(News).filter(News.category.in_(sub_ids)).\
                         order_by(News.release_date).all()[::-1]
         if res:
-            return res[start:limit + 1]
-    return []
+            return (res[start:start+limit],
+                len(res) // limit +1 if len(res) % limit != 0 else len(res) // limit)
+    return [],0
 
 def get_lvl_news(lid):
     if lid:
@@ -78,10 +81,9 @@ def get_lvl_page_news(lid,limit=10,page=0):
     if lid:
         res = ses.query(News).filter(News.category==lid).\
                         order_by(News.release_date).all()[::-1]
-        pages = list(range(0,len(res),limit))
-        pages = [i // limit + 1 for i in pages]
-        return [res,pages] if res else [[],[]]
-    return [[],[]]
+        pages = len(res) // limit if len(res) % limit == 0 else len(res) // limit + 1
+        return [res,pages] if res else [[],0]
+    return [[],0]
 
 def get_last_news(sub_ids,limit=3):
     r = News.objects(id__in=sub_ids).order_by('-release_date')[0:limit]

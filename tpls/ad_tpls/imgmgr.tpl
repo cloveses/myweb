@@ -1,10 +1,10 @@
-% rebase('tpls/base.tpl')
+% rebase('tpls/ad_tpls/base.tpl')
 <script language="javascript" type="text/javascript" src="/ckeditor/ckeditor.js"></script>
-% include('tpls/userinfo.tpl',name=name,id=id)
+% include('tpls/ad_tpls/aduserinfo.tpl',name=name,id=id)
 
 
 %if name:
-    % include('tpls/nav.tpl',user_type=user_type)
+    % include('tpls/ad_tpls/nav.tpl',user_type=user_type)
     <div style="height: 400px;margin-top: 30px;">
         <p>请选择要上传的图片：</p>
         <form method="POST"  enctype="multipart/form-data">
