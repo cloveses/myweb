@@ -8,7 +8,7 @@ from .ad_user import admin_verify
 
 @route('/lvlmgr',method=["GET","POST"])
 @route('/lvlmgr/<parent_lid:int>',method=["GET","POST"])
-def lvlmgr(parent_lid=''):
+def lvlmgr(parent_lid=0):
     admin_verify()
     if request.method == 'GET':
         bread_nav = level.get_bread_nav(parent_lid)
@@ -42,7 +42,7 @@ def lvlmgr(parent_lid=''):
 
 @route('/lvldel/<lid:int>')
 @route('/lvldel/<lid:int>/<parent_lid:int>')
-def lvldel(lid='',parent_lid=''):
+def lvldel(lid=0,parent_lid=0):
     admin_verify()
     if lid:
         level.del_levels(lid)

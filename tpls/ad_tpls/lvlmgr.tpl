@@ -14,6 +14,10 @@
     });
 </script>
 % include('tpls/ad_tpls/aduserinfo.tpl',name=name,id=id)
+<div class="pure-g">
+<div class="pure-u-1-1 headimg">
+</div>
+</div>
 
 % include('tpls/ad_tpls/nav.tpl',user_type=user_type)
 <div>

@@ -58,7 +58,7 @@ def mindex():
 
 @route('/<plid:int>',method=["GET",])
 @route('/<plid:int>/<page:int>',method=["GET",])
-def pindex(plid='0',page=0):
+def pindex(plid=0,page=0):
     info = request.get_cookie('info',secret=secret)
     info = response.set_cookie('info','',secret=secret)
     response.set_cookie('info','',secret=secret)
@@ -66,9 +66,12 @@ def pindex(plid='0',page=0):
     mnewslist,sum_pages = news.get_lvl_page_news(plid,limit=20,page=page)
     pages = tools.get_pages(sum_pages,page)
     all_navs = [level.get_lvl(plid),]
-    all_navs.extend(navs)
     newslist = [(nav,news.get_lvl_news(str(nav.id))[:7]) 
                 for nav in navs]
+    if not navs:
+        all_navs = level.get_brother_lvls(plid)
+    else:
+        all_navs.extend(navs)
     name = request.get_cookie('name',secret=secret)
     id = request.get_cookie('id',secret=secret)
     return template('tpls/more.tpl',
@@ -83,7 +86,7 @@ def pindex(plid='0',page=0):
         )
 
 @route('/news/<nid:int>')
-def detail(nid,plid=''):
+def detail(nid,plid=0):
     navs = level.get_next_lvls('')
     anews = news.get_anews(nid)
     more_news = news.get_lvl_news(anews.category)[:15]

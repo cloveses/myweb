@@ -27,7 +27,7 @@ def ckupload():
 @route('/ctxmgr',method=['GET','POST'])
 @route('/ctxmgr/<lid:int>',method=['GET','POST'])
 @route('/ctxmgr/<lid:int>/<page:int>',method=['GET','POST'])
-def ctxmgr(lid='',page=0):
+def ctxmgr(lid=0,page=0):
     uid = request.get_cookie('adid',secret=secret)
     login_verify()
     if request.method == 'GET':

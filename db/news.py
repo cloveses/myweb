@@ -50,7 +50,7 @@ def check_news(nid,uid,user_type):
         news.is_released = True
         ses.commit()
 
-def get_news(lid='',limit=10,page=0):
+def get_news(lid=0,limit=10,page=0):
     if not lid:
         return [],0
     sub_ids = []
@@ -85,7 +85,7 @@ def get_lvl_page_news(lid,limit=10,page=0):
         return [res,pages] if res else [[],0]
     return [[],0]
 
-def get_last_news(sub_ids,limit=3):
+def get_last_news(sub_ids,limit=5):
     r = News.objects(id__in=sub_ids).order_by('-release_date')[0:limit]
     res = ses.query(News).filter(News.category.in_(sub_ids)).\
                         order_by(News.release_date).all()[::-1]

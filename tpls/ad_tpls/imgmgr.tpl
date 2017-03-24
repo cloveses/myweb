@@ -4,6 +4,11 @@
 
 
 %if name:
+    <div class="pure-g">
+    <div class="pure-u-1-1 headimg">
+    </div>
+    </div>
+
     % include('tpls/ad_tpls/nav.tpl',user_type=user_type)
     <div style="height: 400px;margin-top: 30px;">
         <p>请选择要上传的图片：</p>

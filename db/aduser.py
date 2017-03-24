@@ -58,7 +58,7 @@ def get_power(uid):
     u = ses.query(User).filter(User.id == uid).first()
     if u:
         if u.user_type == 100:
-            return get_sub_lvls('')
+            return get_sub_lvls(0)
         else:
             res = get_power_set(u.power) if u.power else []
             return [lid_to_lvl(i) for i in res]
@@ -86,16 +86,3 @@ def get_user_power(users):
         else:
             user_powers.append('')
     return user_powers
-    # uids = [ObjectId(i) for i in uids]
-    # users = User.objects(id__in=uids)
-    # powerids = [ObjectId(i) for i in powerids]
-    # powers = Level.objects(id__in=powerids)
-    # # print(uids,powerids)
-    # if not users or not powers:
-    #     return
-    # for user in users:
-    #     user.power.clear()
-    #     for power in powers:
-    #         user.power.append(power)
-    #         user.save()
-    # return True

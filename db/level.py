@@ -55,8 +55,8 @@ def insert_before_lvl(name,after_lid):
         ses.add(Level(name=name,r=r,c=c))
         ses.commit()
 
-def add_level(name,parent_lid=''):
-    if parent_lid == '':
+def add_level(name,parent_lid=0):
+    if parent_lid == 0:
         r = ses.query(func.max(Level.r)).first()
         r = r[0]
         r= 1 if (r is None) else r + 1
@@ -77,7 +77,7 @@ def get_lvls():
     return res if res else []
 
 def get_sub_lvls(lid):
-    if lid == '':
+    if lid == 0:
         res = ses.query(Level).filter_by(c=0).order_by(Level.r).all()
         return res if res else []
     v = ses.query(Level).filter_by(id=lid).first()
@@ -113,7 +113,7 @@ def del_levels(lid):
 def get_parent_lvl(lid):
     v = ses.query(Level).filter_by(id=lid).first()
     if v:
-        res = ses.query(Level).filter(Level.r<v.r).order_by(r).all()
+        res = ses.query(Level).filter(Level.r<v.r).order_by(Level.r).all()
         if res:
             for lvl in res[::-1]:
                 if lvl.c == v.c - 1:
@@ -140,6 +140,10 @@ def get_bread_nav(lid):
 
 
 def get_brother_lvls(lid):
+    lvl = lid_to_lvl(lid)
+    if lvl.c == 0:
+        res = ses.query(Level).filter_by(c=0).order_by(Level.r).all()
+        return res if res else []
     pv = get_parent_lvl(lid)
     if pv:
         sub = get_sub_lvls(pv.id)
