@@ -91,6 +91,7 @@ def release():
         news.check_news(nid,uid,user_type)
     redirect('/ctxmgr/' + lid)
 
+@route('/delctx/<nid:int>/<lid:int>')
 @route('/delctx/<nid:int>/<lid:int>/<page:int>')
 def delctx(nid,lid,page=0):
     login_verify()
@@ -103,6 +104,7 @@ def delctx(nid,lid,page=0):
         url += '/' + str(page)
     redirect(url)
 
+@route('/editctx/<lid:int>/<nid:int>',method=["GET","POST"])
 @route('/editctx/<lid:int>/<nid:int>/<page:int>',method=["GET","POST"])
 def editctx(lid,nid,page=0):
     login_verify()
