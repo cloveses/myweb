@@ -2377,6 +2377,7 @@ class FileUpload(object):
         fname = re.sub(r'[^a-zA-Z0-9-_.\s]', '', fname).strip()
         fname = re.sub(r'[-\s]+', '-', fname).strip('.-')
         return fname[:255] or 'empty'
+        return fname
 
     def _copy_file(self, fp, chunk_size=2**16):
         read, write, offset = self.file.read, fp.write, self.file.tell()

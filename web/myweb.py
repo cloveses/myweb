@@ -14,7 +14,6 @@ def mindex():
     newslist = [(nav,news.get_lvl_news(str(nav.id))[:7]) 
                 for nav in navs]
     activeimgs = tools.get_imgs('./activeimg/')
-    activeimgs = ['/active/'+i for i in activeimgs]
     if request.method == 'GET':
         name = request.get_cookie('name',secret=secret)
         id = request.get_cookie('id',secret=secret)

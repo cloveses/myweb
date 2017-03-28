@@ -13,6 +13,7 @@
     <div style="height: 400px;margin-top: 30px;">
         <p>请选择要上传的图片：</p>
         <form method="POST"  enctype="multipart/form-data">
+            <input type="text" name="titlename" placeholder="图片标题" />
             <input type="file" name="upload" />
             <input type="submit" value="上传" />
         </form>

@@ -24,7 +24,15 @@ def imgmgr():
     elif request.method == "POST":
         info = "上传成功！"
         upload = request.files.get('upload')
-        fname,fext = os.path.splitext(upload.filename)
+        fname = request.forms.get('titlename')
+        if not isinstance(fname, str):
+            fname = fname.decode('utf8', 'ignore')
+        fname = fname[:10]
+        if '.' not in upload.filename:
+            fext = '.' + upload.filename
+        else:
+            fext = os.path.splitext(upload.filename)[1]
+        # fname,fext = os.path.splitext(upload.filename)
         if fext in ['.jpg','.jpeg','.png','.gif']:
             rootpath = './activeimg'
             if not os.path.exists(rootpath):
