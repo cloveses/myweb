@@ -33,7 +33,7 @@
         <div>{{nav.name}}<a href="/{{nav.id}}" class="more">更多</a></div>
         %for new in news:
             <li>
-                <a href="/news/{{str(new.id)}}" title="{{new.title}}">{{new.title}}</a>
+                <a href="/news/{{str(new.id)}}" title="{{new.title}}">{{new.title[:20]}}</a>
                 <span class="mydate">{{str(new.release_date)[:10]}}</span>
             </li>
         %end
@@ -74,7 +74,7 @@
         <div>{{nav.name}}<a href="/{{nav.id}}" class="more">更多</a></div>
         %for new in news:
             <li>
-                <a href="/news/{{str(new.id)}}" title="{{new.title}}">{{new.title}}</a>
+                <a href="/news/{{str(new.id)}}" title="{{new.title}}">{{new.title[:20]}}</a>
                 <span class="mydate">{{str(new.release_date)[:10]}}</span>
             </li>
         %end

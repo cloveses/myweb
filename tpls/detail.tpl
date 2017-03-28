@@ -40,7 +40,7 @@
             <p style="text-align: center;">本类其他信息</p>
             %for new in more_news:
                 <li>
-                <a href="/news/{{str(new.id)}}" title="{{new.title}}">{{new.title}}</a>
+                <a href="/news/{{str(new.id)}}" title="{{new.title}}">{{new.title[:20]}}</a>
                 <span class="mydate">{{str(new.release_date)[:10]}}</span>
                 </li>
             %end

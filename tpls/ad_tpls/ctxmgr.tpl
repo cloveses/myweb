@@ -40,7 +40,7 @@
         %end
             %for new in news:
             <tr>
-                <td>{{new.title}}</td>
+                <td>{{new.title[:26]}}</td>
                 <td>{{new.txt[:10]}}</td>
                 <td>{{str(new.release_date)[:19]}}</td>
                 <td><input type="checkbox" {{"checked" if new.is_released else ""}}  form="save_check" name="{{str(new.id)}}-rels" value="{{str(new.id)}}" />审核通过</td>
