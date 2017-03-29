@@ -24,7 +24,7 @@ def get_imgs(path,nums=10):
         files = list(os.walk(path))[0][2]
         if not files:
             return []
-        return sorted(files,key=lambda fn:os.path.getctime(path+fn))[:10]
+        return sorted(files,key=lambda fn:os.path.getctime(path+fn))[:10:-1]
     return []
 
 def get_pages(sum_pages,page,p=3):

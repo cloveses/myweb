@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import os
+import re
 from bottle import route,request,response,template,redirect
 from db import aduser,level,news,tools
 from setting import secret
@@ -28,6 +29,7 @@ def imgmgr():
         if not isinstance(fname, str):
             fname = fname.decode('utf8', 'ignore')
         fname = fname[:10]
+        fname = re.sub(r'\s+','',fname)
         if '.' not in upload.filename:
             fext = '.' + upload.filename
         else:
