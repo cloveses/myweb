@@ -45,7 +45,7 @@ class News(Base):
     author = Column(String(20))
     category = Column(Integer)
     releaser = Column(Integer)
-    release_date = Column(DateTime,default=datetime.datetime.now())
+    release_date = Column(DateTime,default=datetime.datetime.now)
     is_released = Column(Boolean,default=True)
 
 
