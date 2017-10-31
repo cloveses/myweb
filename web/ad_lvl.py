@@ -1,13 +1,14 @@
 # -*- coding:utf-8 -*-
 
 import os
+from .botapp import app
 from bottle import route,request,response,template,redirect
 from db import aduser,level,news,tools
 from setting import secret
 from .ad_user import admin_verify
 
-@route('/lvlmgr',method=["GET","POST"])
-@route('/lvlmgr/<parent_lid:int>',method=["GET","POST"])
+@app.route('/lvlmgr',method=["GET","POST"])
+@app.route('/lvlmgr/<parent_lid:int>',method=["GET","POST"])
 def lvlmgr(parent_lid=0):
     admin_verify()
     if request.method == 'GET':
@@ -40,8 +41,8 @@ def lvlmgr(parent_lid=0):
         url = '/lvlmgr/' + parent_lid if parent_lid else '/lvlmgr'
         redirect(url)
 
-@route('/lvldel/<lid:int>')
-@route('/lvldel/<lid:int>/<parent_lid:int>')
+@app.route('/lvldel/<lid:int>')
+@app.route('/lvldel/<lid:int>/<parent_lid:int>')
 def lvldel(lid=0,parent_lid=0):
     admin_verify()
     if lid:

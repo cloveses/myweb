@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import os
+from .botapp import app
 from bottle import route,request,response,template,redirect
 from db import aduser,level,news,tools
 from setting import secret
@@ -23,7 +24,7 @@ def login_verify(go_url='/admin'):
             secret=secret)
     redirect(go_url)
 
-@route('/usermgr',method=["GET","POST"])
+@app.route('/usermgr',method=["GET","POST"])
 def usermgr():
     admin_verify()
     if request.method == "GET":
@@ -63,14 +64,14 @@ def usermgr():
             aduser.edit_user(uid,name,password)
         redirect('/usermgr')
 
-@route('/userdel/<id:int>')
+@app.route('/userdel/<id:int>')
 def userdel(id=0):
     admin_verify()
     if id:
         aduser.del_user(id)
     redirect('/usermgr')
 
-@route('/chgpw/<uid:int>',method=["GET","POST"])
+@app.route('/chgpw/<uid:int>',method=["GET","POST"])
 def chgpw(uid=0):
     id = login_verify()
     if uid != id:
@@ -95,7 +96,7 @@ def chgpw(uid=0):
         redirect('/adlogout')
 
 
-@route('/adlogout')
+@app.route('/adlogout')
 def logout():
     response.delete_cookie('adid')
     response.delete_cookie('user_type')

@@ -11,8 +11,9 @@ from web.ad_actimg import *
 from web.myweb import *
 
 if __name__ == '__main__':
-##    from db.cms import db_init
-##    db_init()
-##    if ADD_AMDIN:
-##        aduser.add_admin_user(**DEFAULT_ADMIN)
-    run(app=app,server='waitress',host='60.175.231.170',port=9099,reloader=True)
+    from db.cms import db_init
+    db_init()
+    if ADD_AMDIN:
+        aduser.add_admin_user(**DEFAULT_ADMIN)
+    run(port=9099,debug=True,reloader=True)
+    # run(server='waitress',port=9099,debug=True,reloader=True)

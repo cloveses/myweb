@@ -1,11 +1,12 @@
 # -*- coding:utf-8 -*-
 
 import os
+from .botapp import app
 from bottle import route,run,error,static_file,request,response,template,redirect
 from db import user,level,news,tools
 from setting import secret
 
-@route('/',method=["GET","POST"])
+@app.route('/',method=["GET","POST"])
 def mindex():
     info = request.get_cookie('info',secret=secret)
     info = response.set_cookie('info','',secret=secret)
@@ -55,8 +56,8 @@ def mindex():
                 secret=secret)
         redirect('/')
 
-@route('/<plid:int>',method=["GET",])
-@route('/<plid:int>/<page:int>',method=["GET",])
+@app.route('/<plid:int>',method=["GET",])
+@app.route('/<plid:int>/<page:int>',method=["GET",])
 def pindex(plid=0,page=0):
     info = request.get_cookie('info',secret=secret)
     info = response.set_cookie('info','',secret=secret)
@@ -84,7 +85,7 @@ def pindex(plid=0,page=0):
         plid=str(plid)
         )
 
-@route('/news/<nid:int>')
+@app.route('/news/<nid:int>')
 def detail(nid,plid=0):
     navs = level.get_next_lvls('')
     anews = news.get_anews(nid)
@@ -101,7 +102,7 @@ def detail(nid,plid=0):
         )
 
 
-@route('/signup',method=["GET","POST"])
+@app.route('/signup',method=["GET","POST"])
 def signup():
     if request.method == "GET":
         info = request.get_cookie('info',secret=secret)
@@ -130,7 +131,7 @@ def signup():
         response.set_cookie('info',info,secret=secret)
         redirect('/signup')
 
-@route('/me/<uid:int>',method=['GET','POST'])
+@app.route('/me/<uid:int>',method=['GET','POST'])
 def meo(uid):
     if request.method == 'GET':
         info = request.get_cookie('info',secret=secret)
@@ -157,7 +158,7 @@ def chn_pw(uid):
         response.set_cookie('info','可能是密码不匹配或为空！',secret=secret)
         redirect('/me/%s' % uid)
 
-@route('/logout')
+@app.route('/logout')
 def logout():
     response.delete_cookie('id')
     response.delete_cookie('name')

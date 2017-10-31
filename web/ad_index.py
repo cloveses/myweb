@@ -1,11 +1,12 @@
 # -*- coding:utf-8 -*-
 
 import os
+from .botapp import app
 from bottle import route,request,response,template,redirect
 from db import aduser,level,news,tools
 from setting import secret
 
-@route('/admin',method=['GET','POST'])
+@app.route('/admin',method=['GET','POST'])
 def index():
     info = request.get_cookie('info',secret=secret)
     info = response.set_cookie('info','',secret=secret)

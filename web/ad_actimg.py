@@ -2,12 +2,13 @@
 
 import os
 import re
+from .botapp import app
 from bottle import route,request,response,template,redirect
 from db import aduser,level,news,tools
 from setting import secret
 from .ad_user import login_verify
 
-@route('/imgmgr',method=['GET','POST'])
+@app.route('/imgmgr',method=['GET','POST'])
 def imgmgr():
     info = request.get_cookie('info',secret=secret)
     response.set_cookie('info','',secret=secret)

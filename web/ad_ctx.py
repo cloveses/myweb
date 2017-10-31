@@ -1,12 +1,13 @@
 # -*- coding:utf-8 -*-
 
 import os
+from .botapp import app
 from bottle import route,request,response,template,redirect
 from db import aduser,level,news,tools
 from setting import secret
 from .ad_user import login_verify
 
-@route('/ckupload',method=["POST",])
+@app.route('/ckupload',method=["POST",])
 def ckupload():
     login_verify()
     upload = request.files.get('upload')
@@ -24,9 +25,9 @@ def ckupload():
     return restr
 
 
-@route('/ctxmgr',method=['GET','POST'])
-@route('/ctxmgr/<lid:int>',method=['GET','POST'])
-@route('/ctxmgr/<lid:int>/<page:int>',method=['GET','POST'])
+@app.route('/ctxmgr',method=['GET','POST'])
+@app.route('/ctxmgr/<lid:int>',method=['GET','POST'])
+@app.route('/ctxmgr/<lid:int>/<page:int>',method=['GET','POST'])
 def ctxmgr(lid=0,page=0):
     uid = request.get_cookie('adid',secret=secret)
     login_verify()
@@ -91,8 +92,8 @@ def release():
         news.check_news(nid,uid,user_type)
     redirect('/ctxmgr/' + lid)
 
-@route('/delctx/<nid:int>/<lid:int>')
-@route('/delctx/<nid:int>/<lid:int>/<page:int>')
+@app.route('/delctx/<nid:int>/<lid:int>')
+@app.route('/delctx/<nid:int>/<lid:int>/<page:int>')
 def delctx(nid,lid,page=0):
     login_verify()
     uid = request.get_cookie('adid',secret=secret)
@@ -104,8 +105,8 @@ def delctx(nid,lid,page=0):
         url += '/' + str(page)
     redirect(url)
 
-@route('/editctx/<lid:int>/<nid:int>',method=["GET","POST"])
-@route('/editctx/<lid:int>/<nid:int>/<page:int>',method=["GET","POST"])
+@app.route('/editctx/<lid:int>/<nid:int>',method=["GET","POST"])
+@app.route('/editctx/<lid:int>/<nid:int>/<page:int>',method=["GET","POST"])
 def editctx(lid,nid,page=0):
     login_verify()
     name = request.get_cookie('adname',secret=secret)
