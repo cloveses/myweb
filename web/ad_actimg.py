@@ -36,17 +36,32 @@ def imgmgr():
         else:
             fext = os.path.splitext(upload.filename)[1]
         # fname,fext = os.path.splitext(upload.filename)
+#      纯动态部署可以用以下注释的部分
+#         if fext in ['.jpg','.jpeg','.png','.gif']:
+#             rootpath = './activeimg'
+#             if not os.path.exists(rootpath):
+#                 os.makedirs(rootpath)
+#             while os.path.exists('/'.join((rootpath,fname+fext))):
+#                 fname += 'c'
+#             # upload.save('/'.join((rootpath,fname+fext)))
+#             from PIL import Image
+#             myimg = Image.open(upload.file)
+#             myimg.thumbnail((240,160))
+#             myimg.save('/'.join((rootpath,fname+fext)))
         if fext in ['.jpg','.jpeg','.png','.gif']:
-            rootpath = './activeimg'
-            if not os.path.exists(rootpath):
-                os.makedirs(rootpath)
-            while os.path.exists('/'.join((rootpath,fname+fext))):
-                fname += 'c'
-            # upload.save('/'.join((rootpath,fname+fext)))
+        # 修改为两个目录同时保存，使得动态测试和静态服务正常
+            rootpaths = ('./activeimg','./active')
             from PIL import Image
             myimg = Image.open(upload.file)
             myimg.thumbnail((240,160))
-            myimg.save('/'.join((rootpath,fname+fext)))
+            for rootpath in rootpaths:
+                # rootpath = './activeimg'
+                if not os.path.exists(rootpath):
+                    os.makedirs(rootpath)
+                while os.path.exists('/'.join((rootpath,fname+fext))):
+                    fname += 'c'
+                # upload.save('/'.join((rootpath,fname+fext)))
+                myimg.save('/'.join((rootpath,fname+fext)))
         else:
             info = '上传失败，你上传的不是图片文件。'
         response.set_cookie('info',info,secret=secret)
