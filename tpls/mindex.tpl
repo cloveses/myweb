@@ -57,7 +57,7 @@
                     <img src="./assets/img/98339876.jpg" width="240px" height="160px" />  -->
                     %for file_path in activeimgs:
                         <div style="float:left;height:200px;">
-                            <img src="/active/{{file_path}}" width="240px" height="160px" />
+                            <img src="/activeimg/{{file_path}}" width="240px" height="160px" />
                             <p style="text-align: center;line-height: 10%;">{{file_path[:-4][:10]}}</p>
                         </div>
                     %end
